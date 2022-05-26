@@ -5,7 +5,7 @@
 <slot />
 
 <style>
-	:global(body) {
-		background-color: rgb(47, 54, 68);
+	:global(html) {
+		background-color: rgb(37, 42, 52);
 	}
 </style>
