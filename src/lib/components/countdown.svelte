@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	export let targetTime: Date;
 
@@ -7,9 +7,14 @@
 	let minutes: number;
 	let seconds: number;
 
+	let intervalId: any;
+
 	onMount(() => {
-		const id = setInterval(() => {
+		intervalId = setInterval(() => {
 			let totalSeconds = (targetTime.getTime() - new Date().getTime()) / 1000;
+			if (totalSeconds < 0) {
+				totalSeconds = 0;
+			}
 			hours = Math.floor(totalSeconds / 60 / 60);
 
 			totalSeconds = totalSeconds % (60 * 60);
@@ -18,6 +23,10 @@
 			totalSeconds = totalSeconds % 60;
 			seconds = totalSeconds;
 		}, 1000);
+	});
+
+	onDestroy(() => {
+		clearInterval(intervalId);
 	});
 </script>
 
